@@ -22,3 +22,4 @@ while guesses < 6 and guessed == False:
     guesses += 1
 
 print(f"The word was {word}!")
+input("Press enter to exit.")
