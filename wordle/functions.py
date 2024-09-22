@@ -10,35 +10,24 @@ def get_map(word: str, guessed_word: str):
     # -1: not in word
     # 0: in word, incorrect position
     # 1: in word, correct position
-    mapping = []
+    # default -1
+    mapping = [-1, -1, -1, -1, -1]
     
-    for guessed_char, actual_char in zip(guessed_word, word):
-        # Character is in word
+    # Loop for mapping correct characters
+    for index, (guessed_char, actual_char) in enumerate(zip(guessed_word, word)):
         if guessed_char == actual_char:
-            mapping.append(1)
-        # Character is in word, wrong position
-        elif (guessed_char != actual_char) and check_word(word, guessed_char):
-            mapping.append(0)
-        # Character is not in word
-        else:
-            mapping.append(-1)
+            mapping[index] = 1
+            # Replace the character with an empty placeholder
+            word = word.replace(guessed_char, "-", 1)
 
-    # Handle excessive duplicates
-    for index in range(len(mapping)):
-        # Current letter to check and its letter count
-        curr_letter = guessed_word[index]
-        letter_count = word.count(curr_letter)
-
-        # If letter is a duplicate
-        if mapping[index] == 0 and letter_count >= 1:
-            for letter_index, letter in enumerate(guessed_word):
-                # Duplicate letter matches a correctly mapped letter
-                if letter == curr_letter and mapping[letter_index] == 1:
-                    letter_count -= 1
-            
-            # Letter is an excessive duplicate
-            if letter_count == 0:
-                mapping[index] = -1
+    # Loop for mapping incorrect position characters
+    for index, guessed_char in enumerate(guessed_word):
+        if guessed_char in word and mapping[index] == -1:
+            mapping[index] = 0
+            # Replace the character with an empty placeholder
+            # Gets rid of excessive duplicates
+            # If the character of the guessed word is in the actual word, replace the first occurrence
+            word = word.replace(guessed_char, "-", 1)
 
     return mapping
 
