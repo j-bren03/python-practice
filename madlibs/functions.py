@@ -1,4 +1,3 @@
-import os
 import random
 
 def get_madlib():
@@ -11,29 +10,30 @@ def get_madlib():
 
     return madlib
 
-def get_subject_count(madlib):
-    # nouns, verbs, adjectibes
-    counts = []
+def get_subjects(madlib: str):
+    # subjects to replace in the madlib
+    subjects = {}
 
-    counts.append(madlib.count("NOUN"))
-    counts.append(madlib.count("VERB"))
-    counts.append(madlib.count("ADJECTIVE"))
+    while "(" in madlib:
+        start_index = madlib.find("(")
+        end_index = madlib.find(")")
+        subject = madlib[start_index:end_index+1]
 
-    return counts
+        # Add subject to dictionary
+        if subject in subjects:
+            subjects[subject] += 1
+        else:
+            subjects[subject] = 1
 
-def replace_subjects(madlib, sub_count, index):
-    # get subject
-    if index==0:
-        subject = "NOUN"
-    elif index==1:
-        subject = "VERB"
-    else:
-        subject = "ADJECTIVE"
+        # Remove first instance of subject from madlib string
+        madlib = madlib.replace(subject, "*", 1)
 
-    while(sub_count != 0):
-        word = input(f"Enter a {subject.lower()}: ")
-        madlib = madlib.replace(subject, word, 1)
-        sub_count -= 1
-        os.system("cls")
+    return subjects
+
+def replace_subjects(madlib: str, subjects: dict):
+    for subject, count in subjects.items():
+        for i in range(count):
+            value = input(f"Enter {subject[1:-1].lower()}: ")
+            madlib = madlib.replace(subject, value, 1)
 
     return madlib
