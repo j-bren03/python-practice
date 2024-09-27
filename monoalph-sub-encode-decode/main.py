@@ -13,3 +13,9 @@ print(encoded_msg)
 
 decoded_msg = add_cipher_decode(encoded_msg, 3, key)
 print(decoded_msg)
+
+msg = input("").split()
+msg = "".join(msg)
+
+encoded_msg = mult_cipher_encode(msg, 3, key)
+print(encoded_msg)
