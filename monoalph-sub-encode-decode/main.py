@@ -22,3 +22,12 @@ print(encoded_msg)
 
 decoded_msg = mult_cipher_decode(encoded_msg, 4, key)
 print(decoded_msg)
+
+msg = input("").split()
+msg = "".join(msg)
+
+encoded_msg = affine_cipher_encode(msg, 3, 20, key)
+print(encoded_msg)
+
+decoded_msg = affine_cipher_decode(encoded_msg, 3, 20, key)
+print(decoded_msg)
