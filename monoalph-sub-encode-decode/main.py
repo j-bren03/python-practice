@@ -19,3 +19,6 @@ msg = "".join(msg)
 
 encoded_msg = mult_cipher_encode(msg, 3, key)
 print(encoded_msg)
+
+decoded_msg = mult_cipher_decode(encoded_msg, 4, key)
+print(decoded_msg)
